@@ -1,0 +1,1 @@
+export const CUSTOMIZER_SCROLL_TOP_OFFSET = 20

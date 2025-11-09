@@ -1,0 +1,95 @@
+/* eslint-disable no-process-env */
+
+const isTrue = (t?: string | boolean) => t === true || t === 'true'
+
+/**
+ * These variables are populated at runtime and are accessible for both server and client
+ */
+
+type TRuntimeConfigs = {
+  NODE_ENV: string
+  LOCAL_DEV_ADDRESS: string
+  IS_PROD: boolean
+  LOG_REQUESTS: boolean
+  DEBUG_REQUESTS: boolean
+  GQL_ENDPOINT: string
+  WS_ENDPOINT: string
+  INBOX_WS_ENDPOINT: string
+  INBOX_WS_PATH: string
+  INBOX_WS_NAMESPACE_PREFIX: string
+  INBOX_WS_DEBUG: boolean
+  APP_DOMAIN: string
+  FORCED_NETWORK_DOMAIN: string
+  SSOS_FORWARDER_SITE: string
+  UNSPLASH_ACCESS_KEY: string
+  GIPHY_API_KEY: string
+  SNOWPLOW_COLLECTOR_ADDRESS: string
+  SNOWPLOW_ENABLE_PAGE_PING: boolean
+  SNOWPLOW_ENABLE_PAGE_VIEW: boolean
+  RELEASE_CHANNEL: string
+  CLIENT_LOG_LEVEL: string
+  DASHBOARD_URL: string
+  DD_ENABLED: boolean
+  DD_PROFILER_ENABLED: boolean
+  VALID_NATIVE_DOMAIN: string
+  FIREBASE_API_KEY: string
+  FIREBASE_VAPID_KEY: string
+  FIREBASE_AUTH_DOMAIN: string
+  FIREBASE_PROJECT_ID: string
+  FIREBASE_STORAGE_BUCKET: string
+  FIREBASE_MESSAGING_SENDER_ID: string
+  FIREBASE_APP_ID: string
+  FIREBASE_MEASUREMENT_ID: string
+  SEGMENT_WRITE_KEY: string
+  VECTOR_SEARCH_ENABLED: boolean
+  AI_SEARCH_ENABLED: boolean
+}
+
+export const RuntimeConfigs: TRuntimeConfigs = (env => {
+  return {
+    NODE_ENV: env.NODE_ENV,
+    LOCAL_DEV_ADDRESS: env.LOCAL_DEV_ADDRESS,
+    IS_PROD: env.NODE_ENV === 'production',
+    LOG_REQUESTS: isTrue(env.LOG_REQUESTS),
+    DEBUG_REQUESTS: isTrue(env.DEBUG_REQUESTS),
+    GQL_ENDPOINT: env.GQL_ENDPOINT,
+    WS_ENDPOINT: env.WS_ENDPOINT,
+    INBOX_WS_ENDPOINT: env.INBOX_WS_ENDPOINT,
+    INBOX_WS_PATH: env.INBOX_WS_PATH,
+    INBOX_WS_NAMESPACE_PREFIX: env.INBOX_WS_NAMESPACE_PREFIX,
+    INBOX_WS_DEBUG: isTrue(env.INBOX_WS_DEBUG),
+    APP_DOMAIN: env.APP_DOMAIN,
+    FORCED_NETWORK_DOMAIN: env.FORCED_NETWORK_DOMAIN,
+    SSOS_FORWARDER_SITE: env.SSOS_FORWARDER_SITE,
+    UNSPLASH_ACCESS_KEY: env.UNSPLASH_ACCESS_KEY,
+    GIPHY_API_KEY: env.GIPHY_API_KEY,
+    SNOWPLOW_COLLECTOR_ADDRESS: env.SNOWPLOW_COLLECTOR_ADDRESS,
+    SNOWPLOW_ENABLE_PAGE_PING: isTrue(env.SNOWPLOW_ENABLE_PAGE_PING),
+    SNOWPLOW_ENABLE_PAGE_VIEW: isTrue(env.SNOWPLOW_ENABLE_PAGE_VIEW),
+    RELEASE_CHANNEL: env.RELEASE_CHANNEL,
+    CLIENT_LOG_LEVEL: env.CLIENT_LOG_LEVEL || 'info',
+    DASHBOARD_URL: env.DASHBOARD_URL,
+    DD_ENABLED: isTrue(env.DD_ENABLED),
+    DD_PROFILER_ENABLED: isTrue(env.DD_PROFILER_ENABLED),
+    VALID_NATIVE_DOMAIN: env.VALID_NATIVE_DOMAIN,
+    FIREBASE_API_KEY: env.FIREBASE_API_KEY,
+    FIREBASE_VAPID_KEY: env.FIREBASE_VAPID_KEY,
+    FIREBASE_AUTH_DOMAIN: env.FIREBASE_AUTH_DOMAIN,
+    FIREBASE_PROJECT_ID: env.FIREBASE_PROJECT_ID,
+    FIREBASE_STORAGE_BUCKET: env.FIREBASE_STORAGE_BUCKET,
+    FIREBASE_MESSAGING_SENDER_ID: env.FIREBASE_MESSAGING_SENDER_ID,
+    FIREBASE_APP_ID: env.FIREBASE_APP_ID,
+    FIREBASE_MEASUREMENT_ID: env.FIREBASE_MEASUREMENT_ID,
+    SEGMENT_WRITE_KEY: env.SEGMENT_WRITE_KEY,
+    VECTOR_SEARCH_ENABLED: isTrue(env.VECTOR_SEARCH_ENABLED),
+    AI_SEARCH_ENABLED: isTrue(env.AI_SEARCH_ENABLED),
+  }
+})(typeof window !== 'undefined' ? window.RuntimeConfigs : process.env)
+
+declare global {
+  interface Window {
+    RuntimeConfigs: {
+      [K in keyof TRuntimeConfigs]: string
+    }
+  }
+}

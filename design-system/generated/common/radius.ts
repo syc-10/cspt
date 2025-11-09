@@ -1,0 +1,18 @@
+export const radius = {
+  none: '0px',
+  xs: '0.125rem',
+  sm: '0.25rem',
+  md: '0.5rem',
+  lg: '0.75rem',
+  xl: '1rem',
+  full: '9999px',
+  modal: '0.75rem',
+  button: '0.5rem',
+  'button-sm': '0.25rem',
+  avatar: '9999px',
+  base: '0.5rem',
+  'base-sm': '0.25rem',
+  popover: '0.5rem',
+  card: '0.5rem',
+  input: '0.5rem',
+}
